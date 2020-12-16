@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block pagetitle %}Manage Event{% endblock %}
+
+{% block content %}
+{% if event is not None %}
+<ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="true">Event Details</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="invitees-tab" data-toggle="tab" href="#invitees" role="tab" aria-controls="invitees" aria-selected="false">Invitees</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="attendees-tab" data-toggle="tab" href="#attendees" role="tab" aria-controls="attendees" aria-selected="false">Attendees</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+
+  <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
+
+    <h6>{{ event.name }}</h6>
+    <p>{{ event.description }}</p>
+    <h6>Venue:</h6>
+    <p>{{ event.address }}</p>
+    <h6>Date:</h6>
+    <p>{{ event.date|date }}</p>
+    <h6>Time:</h6>
+    <p>{{ event.start_time|time }} - {{ event.end_time|time }}</p>
+  </div>
+
+
+  <div class="tab-pane fade show active" id="invitees" role="tabpanel" aria-labelledby="invitees-tab">
+
+    {% if invitees.count != 0 %}
+    <p>{{ invitees.count }} people have been invited to the event.</p>
+    {% else %}
+      <p>Nobody has been invited to the event yet.</p>
+    {% endif %}
+    <ul class="list-group">
+    {% for invitee in invitees %}}
+      <li class="list-group-item">{% if invitee.resident is not None %}{{ invitee.resident.account.name }}{% else %}{{ invitee.visitor.name }}{{% endif %}</li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'resident_manage_event_invite_resident' event.id %}" class="floating">
+    <i class="fas fa-plus icon-floating"></i>
+    </a>
+
+  </div>
+
+  <div class="tab-pane fade show active" id="attendees" role="tabpanel" aria-labelledby="attendees-tab">
+  </div>
+
+</div>
+
+{% else %}
+<p>No event found with specified id.</p>
+{% endif %}
+
+{% endblock %}

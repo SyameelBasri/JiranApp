@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}Notice Board{% endblock %}
+
+{% block content %}
+  <div class="list-group list-group-flush">
+  {% for notice in object_list %}
+    {% if notice.tier == 'CRITICAL' %}
+      <a href="{% url 'resident_notice' notice.id %}" class="list-group-item list-group-item-action list-group-item-danger">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ notice.title }}</h5>
+        </div>
+        <p class="mb-1">{{ notice.content|truncatechars:100 }}</p>
+        <small>{{ notice.date|date }}</small>
+      </a>
+    {% elif notice.tier == 'NORMAL' %}
+      <a href="{% url 'resident_notice' notice.id %}" class="list-group-item list-group-item-action list-group-item-success">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ notice.title }}</h5>
+        </div>
+        <p class="mb-1">{{ notice.content|truncatechars:100 }}</p>
+        <small>{{ notice.date|date }}</small>
+      </a>
+    {% elif notice.tier == 'LOW' %}
+      <a href="{% url 'resident_notice' notice.id %}" class="list-group-item list-group-item-action list-group-item-light">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ notice.title }}</h5>
+        </div>
+        <p class="mb-1">{{ notice.content|truncatechars:100 }}</p>
+        <small>{{ notice.date|date }}</small>
+      </a>
+    {% endif %}
+    <p class="divider"></p>
+  {% empty %}
+    <p class="text-monospace">Notice board is empty.</p>
+  {% endfor %}
+  </div>
+{% endblock %}

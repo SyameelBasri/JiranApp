@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}Events{% endblock %}
+
+
+{% block content %}
+
+<ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="invites-tab" data-toggle="tab" href="#invites" role="tab" aria-controls="invites" aria-selected="true">Event Invitations</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="host-tab" data-toggle="tab" href="#host" role="tab" aria-controls="host" aria-selected="false">Your Events</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="invites" role="tabpanel" aria-labelledby="invites-tab">
+
+    <div class="card">
+      <div class="card-header bg-light">
+        Pending invitations
+      </div>
+      <ul class="border list-group-item list-group-item-action list-group-item-action d-flex justify-content-between">
+        {% for invite in pending_invitations %}
+        <a href="">
+          <div>
+            <p class="mb-1 list-group-item-heading">{{ invite.event.name }}</p>
+            <div class="d-flex w-100 justify-content-start">
+            <small class="list-group-item-text">{{ invite.event.date|date }}</small>
+            <small class="list-group-item-text">{{ invite.event.start_time|time }} - {{ invite.event.end_time|time }}</small>
+            </div>
+          </div>
+          <div>
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </a>
+      </ul>
+    <p class="divider"></p>
+    {% empty %}
+    <p class="text-monospace">You have no pending invitations.</p>
+    {% endfor %}
+    </div>
+
+    <p class="divider"></p>
+
+    <div class="card">
+      <div class="card-header bg-light">
+        Events attending
+      </div>
+      <ul class="border list-group-item list-group-item-action list-group-item-action d-flex justify-content-between">
+        {% for invite in events_attending %}
+        <a href="">
+          <div>
+            <p class="mb-1 list-group-item-heading">{{ invite.event.name }}</p>
+            <div class="d-flex w-100 justify-content-start">
+            <small class="list-group-item-text">{{ invite.event.date|date }}</small>
+            <small class="list-group-item-text">{{ invite.event.start_time|time }} - {{ invite.event.end_time|time }}</small>
+            </div>
+          </div>
+          <div>
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </a>
+      </ul>
+    <p class="divider"></p>
+    {% empty %}
+    <p class="text-monospace">You are not attending any events.</p>
+    {% endfor %}
+    </div>
+
+  </div>
+
+  <div class="tab-pane fade" id="host" role="tabpanel" aria-labelledby="host-tab">
+    <div class="list-group ">
+      {% for event in events_hosting %}
+      <a href="{% url 'resident_manage_event' event.id %}" class="border list-group-item list-group-item-action list-group-item-action d-flex justify-content-between">
+          <div>
+            <p class="mb-1 list-group-item-heading">{{ event.name }}</p>
+            <div class="d-flex w-100 justify-content-between">
+            <small class="list-group-item-text">{{ event.date|date }}</small>
+            <small class="list-group-item-text">{{ event.start_time|time }} - {{ event.end_time|time }}</small>
+            </div>
+          </div>
+          <div>
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </a>
+      <p class="divider"></p>
+      {% empty %}
+      <p class="text-monospace">You are not hosting any events.</p>
+      {% endfor %}
+    </div>
+
+
+    <a href="{% url 'resident_host_event' %}" class="floating">
+    <i class="fas fa-plus icon-floating"></i>
+    </a>
+  </div>
+
+</div>
+
+
+{% endblock %}

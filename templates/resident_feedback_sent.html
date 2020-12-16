@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block pagetitle %}Feedback Sent{% endblock %}
+
+{% block content %}
+  <h3>Thank you for your feedback!</h3>
+  <a href="{% url 'resident_feedback' %}">Submit another feedback</a>
+{% endblock %}

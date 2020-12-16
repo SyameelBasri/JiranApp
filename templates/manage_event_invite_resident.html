@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}Select neighbours to invite{% endblock %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-outline-success">Invite</button>
+  </form>
+
+{% endblock %}

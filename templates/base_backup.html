@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Material Design for Bootstrap fonts and icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+
+    <!-- Material Design for Bootstrap CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Kalam&display=swap" rel="stylesheet">
+
+    <style>
+      #view {
+        min-height:100vh;
+      }
+      #topnavbar {
+        background-color: darkgreen;
+        color: white;
+      }
+      #navbar-title {
+        position: absolute;
+        left: 80px;
+        top: 0;
+        font-family: 'Kalam', cursive;
+        font-size: 2.5em;
+      }
+      .floating {
+        position:fixed;
+        width:60px;
+        height:60px;
+        bottom:100px;
+        right:40px;
+        background-color:#0C9;
+        color:#FFF;
+        border-radius:50px;
+        text-align:center;
+        box-shadow: 2px 2px 3px #999;
+      }
+      .icon-floating{
+        margin-top:22px;
+      }
+}
+    </style>
+
+    <title>{% block pagetitle %}{% endblock %}</title>
+
+    {% block extrahead %}
+    {% endblock %}
+
+  </head>
+  <body>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/bb8925fcf4.js" crossorigin="anonymous"></script>
+
+    <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+
+    <div id="view" class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay">
+      <header class="bmd-layout-header sticky-top">
+        <div id="topnavbar" class="navbar navbar-dark bg-faded">
+          <button class="navbar-toggler" type="button" data-toggle="drawer" data-target="#dw-p1">
+            <span class="sr-only">Toggle drawer</span>
+            <i class="material-icons">menu</i>
+          </button>
+          <p id="navbar-title">Jiran</p>
+        </div>
+      </header>
+      <div id="dw-p1" class="bmd-layout-drawer bg-faded">
+        <header>
+          <a class="navbar-brand">Title</a>
+        </header>
+        <ul class="list-group">
+          <a class="list-group-item">Link 1</a>
+          <a class="list-group-item">Link 2</a>
+          <a class="list-group-item">Link 3</a>
+        </ul>
+      </div>
+      <main class="bmd-layout-content">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col">
+              <hr class="mt-0 mb-4">
+              {% block content %}
+              {% endblock %}
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+  </body>
+</html>

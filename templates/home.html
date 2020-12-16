@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <a href="{% url 'resident_notice_board' %}" class="card">
+      <div class="card-header bg-light">
+          <b>Notice Board</b>
+      </div>
+        {% for notice in notices %}
+      <ul class="border list-group-item d-flex justify-content-between">
+          <div>
+            {{ notice.title }}
+          </div>
+      </ul>
+    {% empty %}
+    <p class="text-monospace">Notice board empty.</p>
+    {% endfor %}
+    </a>
+    <p class="divider"></p>
+    <a href="" class="card">
+      <div class="card-header bg-light">
+          <b>Notifications</b>
+      </div>
+      <ul class="border list-group-item d-flex justify-content-between">
+              Outstanding fees: RM200.00</ul>
+
+      <ul class="border list-group-item d-flex justify-content-between">Syameel's Birthday Party on 29th Nov</ul>
+
+      <ul class="border list-group-item d-flex justify-content-between">Request to join group 'GENG-MAKAN' accepted</ul>
+    </a>
+
+<br/>
+
+<div class="d-flex justify-content-around">
+        <div class="col-md-3 text-center">
+          <a href="{% url 'resident_fees' %}"  class="fa fa-dollar-sign fa-3x"> </a>
+            <h6>Fees</h6>
+        </div>
+
+        <div class="col-md-3 text-center">
+          <a  href="{% url 'resident_events' %}" class="fa fa-calendar fa-3x"> </a>
+          <h6>Event</h6>
+        </div>
+
+        <div class="col-md-3 text-center">
+          <a href="{% url 'resident_facilities' %}" class="fa fa-building fa-3x"> </a>
+         <h6>Facility</h6>
+        </div>
+        <div class="col-md-3 text-center">
+          <a  href="" class="fa fa-share fa-3x"> </a>
+         <h6>Resource</h6>
+        </div>
+</div>
+
+
+
+{% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">login</a>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block pagetitle %}{{ facility.name }}{% endblock %}
+
+{% block content %}
+{% if facility is not None %}
+<div>
+  <div class="card">
+  <img class="card-img-top" src="{{ facility.img_url }}" alt="Card image cap">
+  </div>
+  </br>
+  <h6>Description:</h6>
+  <p>{{ facility.description }}</p>
+  <h6>Address:</h6>
+  <p>{{ facility.address }}</p>
+</div>
+  <hr/>
+
+<div>
+  <h6 class="font-weight-light">Book the {{ facility.name }}</h6>
+  <form method="post">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <button type="submit" class="btn btn-outline-success">Book</button>
+  </form>
+</div>
+{% else %}
+<p>No facility found with specified id.</p>
+{% endif %}
+
+{% endblock %}
