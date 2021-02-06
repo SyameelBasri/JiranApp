@@ -17,8 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
 
+from jiranapp.resident.views import ResidentLoginView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', ResidentLoginView.as_view(), name='login'),
     path('', include('django.contrib.auth.urls')),
     path('resident/', include('jiranapp.resident.urls')),
     path('management/', include('jiranapp.management.urls')),

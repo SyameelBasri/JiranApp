@@ -11,8 +11,13 @@ from django.views.generic.list import ListView
 from django.views.generic import TemplateView
 from .forms import *
 
+from django.contrib.auth.views import LoginView
 
 # Create your views here.
+class ResidentLoginView(LoginView):
+    authentication_form = ResidentAuthenticationForm
+
+
 def resident_home(request):
     notices = Notice.objects.all().order_by('-id')[:3]
     return render(request, 'home.html', {'notices':notices})

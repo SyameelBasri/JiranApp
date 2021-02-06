@@ -1,7 +1,14 @@
 from django import forms
 from django.forms import ModelForm, Form, fields
+from django.contrib.auth.forms import AuthenticationForm, UsernameField
 from jiranapp.models import *
 
+
+class ResidentAuthenticationForm(AuthenticationForm):
+    username = UsernameField(
+        label='Username or email address or phone number',
+        widget=forms.TextInput(attrs={'autofocus': True})
+    )
 
 class FeedbackForm(ModelForm):
     class Meta:
