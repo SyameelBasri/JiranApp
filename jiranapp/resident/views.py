@@ -6,7 +6,7 @@ from rest_framework import generics
 from jiranapp.serializers import *
 from jiranapp.models import *
 
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView
 from .forms import *
@@ -40,6 +40,16 @@ class RegisterVisitorResidentView(FormView):
         c = super(RegisterVisitorResidentView, self).get_context_data(**kwargs)
         self.user = self.request.user
         return c
+
+
+class EditVisitorResidentView(UpdateView):
+    model = Visitor
+    template_name = 'resident_visitors_edit.html'
+    form_class = VisitorInviteForm
+    
+    def form_valid(self, form):
+        form.save(commit=True)
+        return redirect('resident_visitors')
 
 
 def cancel_visitor_resident_view(request, visitor_id):
