@@ -59,6 +59,7 @@ class Notice(models.Model):
 
 
 class Feedback(models.Model):
+    title = models.CharField(max_length=100)
     category = models.CharField(max_length=20, choices=FEEDBACK_CATEGORY)
     content = models.TextField(blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
