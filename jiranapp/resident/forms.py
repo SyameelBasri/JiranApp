@@ -6,7 +6,7 @@ from jiranapp.models import *
 class FeedbackForm(ModelForm):
     class Meta:
         model = Feedback
-        fields = ('category', 'content')
+        fields = ('title', 'category', 'content')
 
 
 class FacilityBookingForm(ModelForm):
