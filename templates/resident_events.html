@@ -20,9 +20,9 @@
       <div class="card-header bg-light">
         Pending invitations
       </div>
-      <ul class="border list-group-item list-group-item-action list-group-item-action d-flex justify-content-between">
+      <ul class="list-group">
         {% for invite in pending_invitations %}
-        <a href="">
+        <li class="border list-group-item list-group-item-action d-flex justify-content-between" href="">
           <div>
             <p class="mb-1 list-group-item-heading">{{ invite.event.name }}</p>
             <div class="d-flex w-100 justify-content-start">
@@ -33,12 +33,12 @@
           <div>
             <i class="fas fa-chevron-right"></i>
           </div>
-        </a>
-      </ul>
+        </li>
     <p class="divider"></p>
     {% empty %}
     <p class="text-monospace">You have no pending invitations.</p>
     {% endfor %}
+    </ul>
     </div>
 
     <p class="divider"></p>
