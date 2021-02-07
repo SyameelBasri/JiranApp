@@ -5,6 +5,7 @@ from django.views import View
 from rest_framework import generics
 from jiranapp.serializers import *
 from jiranapp.models import *
+from datetime import datetime, timedelta
 
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
@@ -85,7 +86,7 @@ class FeedbackResidentView(FormView):
 
 def facilities_resident_view(request):
     facilities = Facility.objects.all()
-    bookings = FacilityBooking.objects.filter(booked_by=request.user).order_by('-date', '-start_time')
+    bookings = FacilityBooking.objects.filter(booked_by=request.user).order_by('-date')
 
     return render(request, 'resident_facilities.html', {'facilities': facilities, 'bookings':bookings})
 
@@ -95,17 +96,34 @@ def facility_resident_view(request, facility_id):
         facility = Facility.objects.get(id=facility_id)
         form = FacilityBookingForm(request.POST)
 
+        now = datetime.now()
+        base = now.replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
+        difference_to_midnight = 24 - now.hour - 1
+        DAYS = 14
+
+        booking_slots = {}
+
+        for slot in [(base + timedelta(hours=x)) for x in range((DAYS * 24) + difference_to_midnight)]:
+            if booking_slots.get(slot.strftime('%Y-%m-%d')) is None:
+                booking_slots[slot.strftime('%Y-%m-%d')] = []
+            
+            booking_slots[slot.strftime('%Y-%m-%d')].append(slot.strftime('%H:%M'))
+
+        for o in FacilityBooking.objects.filter(facility=facility):
+            booking_slots[o.date.strftime('%Y-%m-%d')].remove(o.date.strftime('%H:%M'))
+
         if form.is_valid():
             object = form.save(commit=False)
             object.facility = facility
             object.booked_by = request.user
+            object.end_time = object.date + timedelta(hours=1)
             object.save()
             return redirect('resident_facilities')
 
     except Facility.DoesNotExist:
         facility = None
         form = None
-    return render(request, 'resident_facility.html', {'facility': facility, 'form':form})
+    return render(request, 'resident_facility.html', {'facility': facility, 'form':form, 'booking_slots':booking_slots})
 
 
 def cancel_facility_booking_resident_view(request, booking_id):

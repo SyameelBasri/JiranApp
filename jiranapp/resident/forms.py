@@ -12,11 +12,12 @@ class FeedbackForm(ModelForm):
 class FacilityBookingForm(ModelForm):
     class Meta:
         model = FacilityBooking
-        fields = ('date', 'start_time', 'end_time')
+        fields = ('date',)
         widgets = {
-            'date': forms.widgets.DateInput(attrs={'type': 'date'}),
-            'start_time': forms.widgets.TimeInput(format='%H:%M', attrs={'type': 'time'}),
-            'end_time': forms.widgets.TimeInput(format='%H:%M', attrs={'type': 'time'}),
+            'date': forms.widgets.DateTimeInput(attrs={
+                'type': 'text',
+                'id': 'datetimepicker',
+            }),
         }
 
 
