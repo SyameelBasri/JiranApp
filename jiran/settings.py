@@ -140,6 +140,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_USER_MODEL = 'jiranapp.Account'
 
+AUTHENTICATION_BACKENDS = ['jiranapp.backends.LoginBackend']
+
 STATIC_ROOT = './static'
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
