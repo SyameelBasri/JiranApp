@@ -17,6 +17,6 @@ urlpatterns = [
     path(r'events', events_resident_view, name='resident_events'),
     path(r'events/host', host_event_resident_view, name='resident_host_event'),
     path(r'events/manage/<int:event_id>', manage_event_resident_view, name='resident_manage_event'),
-    path(r'events/manage/<int:event_id>/invite_resident', manage_event_invite_resident_view, name='resident_manage_event_invite_resident'),
+    path(r'events/manage/<int:pk>/invite_resident', EventInviteResidentView.as_view(), name='resident_manage_event_invite_resident'),
     path(r'fees', fees_resident_view, name='resident_fees'),
 ]

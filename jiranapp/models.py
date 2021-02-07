@@ -74,14 +74,18 @@ class Event(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     created_at = models.DateTimeField("Created At", auto_now_add=True)
+    invitees = models.ManyToManyField('Account', through='EventInvitation')
 
 
 class EventInvitation(models.Model):
     event = models.ForeignKey(Event, related_name='invited_to', on_delete=models.CASCADE)
     visitor = models.OneToOneField(Visitor, related_name='visitor_invited_to', on_delete=models.CASCADE, blank=True, null=True)
-    resident = models.ForeignKey(Resident, related_name='resident_invited_to', on_delete=models.CASCADE, blank=True, null=True)
+    resident = models.ForeignKey(Account, related_name='resident_invited_to', on_delete=models.CASCADE, blank=True, null=True)
     is_attending = models.BooleanField(default=False)
     has_responded = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = (('event', 'resident'))
 
 
 class Facility(models.Model):
