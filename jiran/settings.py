@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'crispy_forms',
+    'ckeditor',
     'jiranapp',
     'jiranapp.resident',
     'jiranapp.management',
@@ -140,3 +141,13 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 AUTH_USER_MODEL = 'jiranapp.Account'
 
 AUTHENTICATION_BACKENDS = ['jiranapp.backends.LoginBackend']
+
+STATIC_ROOT = './static'
+
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+    },
+}

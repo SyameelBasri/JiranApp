@@ -6,6 +6,7 @@ urlpatterns = [
     path(r'home', resident_home, name='resident_home'),
     path(r'visitors', visitors_resident_view, name='resident_visitors'),
     path(r'visitors/register', RegisterVisitorResidentView.as_view(), name='resident_register_visitors'),
+    path(r'visitors/edit_registration/<int:pk>', EditVisitorResidentView.as_view(), name='resident_edit_register_visitor'),
     path(r'visitors/cancel_registration/<int:visitor_id>', cancel_visitor_resident_view, name='resident_cancel_register_visitor'),
     path(r'notice_board', NoticeBoardResidentView.as_view(), name='resident_notice_board'),
     path(r'notice_board/<int:notice_id>', notice_resident_view, name='resident_notice'),
@@ -17,6 +18,6 @@ urlpatterns = [
     path(r'events', events_resident_view, name='resident_events'),
     path(r'events/host', host_event_resident_view, name='resident_host_event'),
     path(r'events/manage/<int:event_id>', manage_event_resident_view, name='resident_manage_event'),
-    path(r'events/manage/<int:event_id>/invite_resident', manage_event_invite_resident_view, name='resident_manage_event_invite_resident'),
+    path(r'events/manage/<int:pk>/invite_resident', EventInviteResidentView.as_view(), name='resident_manage_event_invite_resident'),
     path(r'fees', fees_resident_view, name='resident_fees'),
 ]

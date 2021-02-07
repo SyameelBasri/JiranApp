@@ -16,7 +16,12 @@
       </div>
     </div>
     <div class="d-flex justify-content-end">
-      <i class="fas fa-share-alt"></i>
+      <div>
+        <i class="fas fa-share-alt"></i>
+      </div>
+      <div>
+        <a href="{% url 'resident_edit_register_visitor' visitor.id %}" class="fas fa-edit"></a>
+      </div>
       <a href="{% url 'resident_cancel_register_visitor' visitor.id %}" class="fas fa-times" style="color: red;"></a>
     </div>
   </ul>
