@@ -127,8 +127,8 @@ def cancel_facility_booking_resident_view(request, booking_id):
 
 
 def events_resident_view(request):
-    pending_invitations = EventInvitation.objects.filter(resident=Resident.objects.get(id=request.user), has_responded=False)
-    events_attending = EventInvitation.objects.filter(resident=Resident.objects.get(id=request.user), is_attending=True)
+    pending_invitations = EventInvitation.objects.filter(resident=request.user, has_responded=False)
+    events_attending = EventInvitation.objects.filter(resident=request.user, is_attending=True)
     events_hosting = Event.objects.filter(host=Resident.objects.get(id=request.user))
 
     return render(request, 'resident_events.html', {'pending_invitations':pending_invitations,
@@ -156,12 +156,19 @@ def manage_event_resident_view(request, event_id):
     return render(request, 'resident_manage_event.html', {'event':event, 'invitees':invitees, 'attendees':attendees})
 
 
-def manage_event_invite_resident_view(request, event_id):
-    event = Event.objects.get(id=event_id)
-    residents = Resident.objects.all()
-    form = EventInviteResidentForm(request.POST)
+class EventInviteResidentView(UpdateView):
+    model = Event
+    template_name = 'manage_event_invite_resident.html'
+    form_class = EventInviteResidentForm
 
-    return render(request, 'manage_event_invite_resident.html', {'event':event, 'residents':residents, 'form':form})
+    def form_valid(self, form):
+        form.save(commit=True)
+        return redirect('resident_events')
+    
+    def get_form_kwargs(self):
+        kwargs = super(EventInviteResidentView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
 
 
 def fees_resident_view(request):

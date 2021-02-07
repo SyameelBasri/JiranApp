@@ -32,25 +32,28 @@
   </div>
 
 
-  <div class="tab-pane fade show active" id="invitees" role="tabpanel" aria-labelledby="invitees-tab">
+  <div class="tab-pane fade show" id="invitees" role="tabpanel" aria-labelledby="invitees-tab">
 
     {% if invitees.count != 0 %}
     <p>{{ invitees.count }} people have been invited to the event.</p>
     {% else %}
       <p>Nobody has been invited to the event yet.</p>
     {% endif %}
-    <ul class="list-group">
-    {% for invitee in invitees %}}
-      <li class="list-group-item">{% if invitee.resident is not None %}{{ invitee.resident.account.name }}{% else %}{{ invitee.visitor.name }}{{% endif %}</li>
-      {% endfor %}
-    </ul>
+    <div class="list-group">
+        {% for invitee in invitees %}
+        <div class="border list-group-item list-group-item-action list-group-item-action d-flex justify-content-between">
+          {% if invitee.resident is not None %}{{ invitee.resident }}{% else %}{{ invitee.visitor.name }}{% endif %}
+        </div>
+        <p class="divider"></p>
+        {% endfor %}
+    </div>
     <a href="{% url 'resident_manage_event_invite_resident' event.id %}" class="floating">
     <i class="fas fa-plus icon-floating"></i>
     </a>
 
   </div>
 
-  <div class="tab-pane fade show active" id="attendees" role="tabpanel" aria-labelledby="attendees-tab">
+  <div class="tab-pane fade show" id="attendees" role="tabpanel" aria-labelledby="attendees-tab">
   </div>
 
 </div>
