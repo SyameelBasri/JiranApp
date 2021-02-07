@@ -8,7 +8,8 @@
 <p>Tier: {{ notice.tier }}</p>
 <p>Date: {{ notice.date }}</p>
 <h2>{{ notice.title }}</h2>
-<p>{{ notice.content }}</p>
+<hr>
+<p>{{ notice.content|safe }}</p>
 {% else %}
 <p>No notice found with specified id.</p>
 {% endif %}

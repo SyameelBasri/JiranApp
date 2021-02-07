@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from ckeditor.fields import RichTextField
 
 USER_TYPES = (
     ('RESIDENT', 'RESIDENT'),
@@ -53,7 +54,7 @@ class Visitor(models.Model):
 class Notice(models.Model):
     tier = models.CharField(max_length=20, choices=NOTIFICATION_TIER)
     title = models.CharField(max_length=100)
-    content = models.TextField(blank=True, null=True)
+    content = RichTextField(blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
     posted_by = models.ForeignKey(Account, related_name='posted_by_management', on_delete=None)
 
