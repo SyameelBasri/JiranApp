@@ -6,6 +6,38 @@
 
 {% block content %}
 {% if facility is not None %}
+
+{% block scripts %}
+<script>
+  function updateDTP(dp,$input){
+    $('#datetimepicker').datetimepicker('setOptions', {allowTimes: availableSlots[moment($input.val(), 'YYYY-MM-DD hh:mm').format('YYYY-MM-DD')]});
+    // $('#datetimepicker').datetimepicker({
+    //   format: 'Y-m-d H:i',
+    //   formatDate: 'Y-m-d',
+    //   formatTime: 'H:i',
+    //   allowDates: Object.keys(availableSlots),
+    //   allowTimes: availableSlots[moment($input.val(), 'YYYY-MM-DD hh:mm').format('YYYY-MM-DD')],
+    //   onChangeDateTime: updateDTP,
+    //   minDate: 0,
+    //   roundTime:'floor',
+    // });
+  }
+
+  var availableSlots = {{ booking_slots|safe }}
+  $('#datetimepicker').datetimepicker({
+    format: 'Y-m-d H:i',
+    formatDate: 'Y-m-d',
+    formatTime: 'H:i',
+    allowDates: Object.keys(availableSlots),
+    defaultDate: moment().add(1,'hours').format('YYYY-MM-DD'),
+    allowTimes: availableSlots[moment().add(1,'hours').format('YYYY-MM-DD')],
+    onChangeDateTime: updateDTP,
+    minDate: 0,
+  });
+</script>
+{% endblock %}
+
+
 <div>
   <div class="card">
   <img class="card-img-top" src="{{ facility.img_url }}" alt="Card image cap">

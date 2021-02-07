@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from ckeditor.fields import RichTextField
 
 USER_TYPES = (
     ('RESIDENT', 'RESIDENT'),
@@ -53,12 +54,13 @@ class Visitor(models.Model):
 class Notice(models.Model):
     tier = models.CharField(max_length=20, choices=NOTIFICATION_TIER)
     title = models.CharField(max_length=100)
-    content = models.TextField(blank=True, null=True)
+    content = RichTextField(blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
     posted_by = models.ForeignKey(Account, related_name='posted_by_management', on_delete=None)
 
 
 class Feedback(models.Model):
+    title = models.CharField(max_length=100)
     category = models.CharField(max_length=20, choices=FEEDBACK_CATEGORY)
     content = models.TextField(blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
@@ -74,14 +76,18 @@ class Event(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     created_at = models.DateTimeField("Created At", auto_now_add=True)
+    invitees = models.ManyToManyField('Account', through='EventInvitation')
 
 
 class EventInvitation(models.Model):
     event = models.ForeignKey(Event, related_name='invited_to', on_delete=models.CASCADE)
     visitor = models.OneToOneField(Visitor, related_name='visitor_invited_to', on_delete=models.CASCADE, blank=True, null=True)
-    resident = models.ForeignKey(Resident, related_name='resident_invited_to', on_delete=models.CASCADE, blank=True, null=True)
+    resident = models.ForeignKey(Account, related_name='resident_invited_to', on_delete=models.CASCADE, blank=True, null=True)
     is_attending = models.BooleanField(default=False)
     has_responded = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = (('event', 'resident'))
 
 
 class Facility(models.Model):
@@ -95,11 +101,13 @@ class Facility(models.Model):
 class FacilityBooking(models.Model):
     facility = models.ForeignKey(Facility, related_name='booking_for_facility', on_delete=models.CASCADE)
     event = models.OneToOneField(Event, related_name='booking_for_event', on_delete=models.CASCADE, blank=True, null=True)
-    date = models.DateField('Booking date')
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    date = models.DateTimeField('Booking date')
+    end_time = models.DateTimeField()
     booked_by = models.ForeignKey(Account, related_name='booking_by', on_delete=models.CASCADE)
     created_at = models.DateTimeField("Created At", auto_now_add=True)
+
+    class Meta:
+        unique_together = (('facility', 'date'))
 
 
 class FeesCharged(models.Model):
