@@ -65,18 +65,6 @@
 
   </head>
   <body>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.min.js"
-      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-      crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/bb8925fcf4.js" crossorigin="anonymous"></script>
-
-    <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
-
     <div id="view" class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay">
       <header class="bmd-layout-header fixed-top">
         <div id="topnavbar" class="navbar navbar-dark bg-faded">
@@ -129,4 +117,28 @@
       </nav>
 
   </body>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/bb8925fcf4.js" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.datetimepicker.min.css' %}"/ >
+  <script src="{% static 'js/jquery.datetimepicker.full.min.js' %}"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+
+  <script>$(document).ready(function() {
+    $('body').bootstrapMaterialDesign();
+  });</script>
+
+  
+  {% block scripts %}
+  {% endblock %}
+  
 </html>

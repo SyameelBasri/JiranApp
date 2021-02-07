@@ -101,11 +101,13 @@ class Facility(models.Model):
 class FacilityBooking(models.Model):
     facility = models.ForeignKey(Facility, related_name='booking_for_facility', on_delete=models.CASCADE)
     event = models.OneToOneField(Event, related_name='booking_for_event', on_delete=models.CASCADE, blank=True, null=True)
-    date = models.DateField('Booking date')
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    date = models.DateTimeField('Booking date')
+    end_time = models.DateTimeField()
     booked_by = models.ForeignKey(Account, related_name='booking_by', on_delete=models.CASCADE)
     created_at = models.DateTimeField("Created At", auto_now_add=True)
+
+    class Meta:
+        unique_together = (('facility', 'date'))
 
 
 class FeesCharged(models.Model):
